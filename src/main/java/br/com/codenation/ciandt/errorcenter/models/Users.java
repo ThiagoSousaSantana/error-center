@@ -29,10 +29,6 @@ public class Users {
     @Size(min = 3, max = 100)
     private String password;
 
-    @NotNull
-    @Size(max = 255)
-    private String token;
-
     @OneToMany(mappedBy = "user")
     private List<Origin> origins;
 
