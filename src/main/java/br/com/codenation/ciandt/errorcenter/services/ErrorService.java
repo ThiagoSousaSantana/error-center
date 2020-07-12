@@ -54,4 +54,8 @@ public class ErrorService {
 
         return repository.findAllByEnvironment(environment, pageRequest);
     }
+
+    public void delete(UUID errorId) {
+        repository.deleteById(errorId);
+    }
 }

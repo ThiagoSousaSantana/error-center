@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Tag(name = "Errors")
 @AllArgsConstructor
 @RestController
@@ -45,5 +47,12 @@ public class ErrorController {
             @RequestParam(required = false, defaultValue = "DESC") String sortDirection) {
 
         return service.listAll(environment, findErrorBy, searchTerm, page, size, sortBy, sortDirection);
+    }
+
+    @Operation(summary = "Delete error")
+    @DeleteMapping("/{errorId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID errorId) {
+        service.delete(errorId);
     }
 }
