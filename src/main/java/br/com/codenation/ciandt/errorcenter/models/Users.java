@@ -1,5 +1,6 @@
 package br.com.codenation.ciandt.errorcenter.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,6 +30,7 @@ public class Users {
     @Size(min = 3, max = 100)
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<Origin> origins;
 

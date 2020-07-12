@@ -1,12 +1,12 @@
 package br.com.codenation.ciandt.errorcenter.services;
 
+import br.com.codenation.ciandt.errorcenter.exceptions.ObjectNotFoundException;
 import br.com.codenation.ciandt.errorcenter.models.Users;
 import br.com.codenation.ciandt.errorcenter.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,7 +19,9 @@ public class UserService {
         return repository.save(user);
     }
 
-    public Optional<Users> getById(UUID id) {
-        return repository.findById(id);
+    public Users getById(UUID id) {
+        return repository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException("User not found")
+        );
     }
 }
