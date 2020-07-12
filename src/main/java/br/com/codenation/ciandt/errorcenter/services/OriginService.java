@@ -1,5 +1,6 @@
 package br.com.codenation.ciandt.errorcenter.services;
 
+import br.com.codenation.ciandt.errorcenter.exceptions.ObjectNotFoundException;
 import br.com.codenation.ciandt.errorcenter.models.Origin;
 import br.com.codenation.ciandt.errorcenter.repositories.OriginRepository;
 import lombok.AllArgsConstructor;
@@ -18,5 +19,11 @@ public class OriginService {
         var user = userService.getById(userId);
         origin.setUser(user);
         return repository.save(origin);
+    }
+
+    public Origin findById(UUID originId) {
+        return repository.findById(originId).orElseThrow(
+                () -> new ObjectNotFoundException("Origin not found")
+        );
     }
 }

@@ -1,6 +1,7 @@
 package br.com.codenation.ciandt.errorcenter.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
@@ -31,6 +32,7 @@ public class Origin {
     @JoinColumn(name = "user_id")
     private Users user;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "origin")
     private List<Error> errors;
 }
