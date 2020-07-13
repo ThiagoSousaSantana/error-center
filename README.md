@@ -1,1 +1,1 @@
-# error-center
+# Errors center
