@@ -16,7 +16,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserService usuarioService;
+    private UserService userService;
     @Autowired
     private JwtTokenProvider tokenProvider;
 
@@ -26,10 +26,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             var token = getJwtFromRequest(request);
 
-            if (token != null && tokenProvider.validaToken(token)) {
-                var usuario = usuarioService.getById(tokenProvider.getIdUsuario(token));
+            if (token != null && tokenProvider.validToken(token)) {
+                var user = userService.getById(tokenProvider.getUserId(token.substring(7)));
 
-                var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        var bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer "))
             return bearerToken;
         return null;

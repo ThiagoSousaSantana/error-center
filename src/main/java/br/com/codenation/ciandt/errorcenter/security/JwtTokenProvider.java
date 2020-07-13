@@ -20,7 +20,7 @@ public class JwtTokenProvider {
     @Value("${app.jwtExpirationInMs}")
     private Long jwtTempoExpiracao;
 
-    public String geraToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         var user = (Users) authentication.getPrincipal();
 
         Date dataAtual = new Date();
@@ -34,15 +34,15 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public UUID getIdUsuario(String token) {
+    public UUID getUserId(String token) {
         return UUID.fromString(Jwts.parser()
                 .setSigningKey(jwtSecret)
-                .parseClaimsJws(token.substring(7))
+                .parseClaimsJws(token)
                 .getBody()
                 .getSubject());
     }
 
-    public Boolean validaToken(String token) {
+    public Boolean validToken(String token) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token.substring(7));
             return true;
